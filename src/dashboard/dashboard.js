@@ -63,7 +63,7 @@ function series_display(series_list, root_node) {
         type: "datetime",
       },
     };
-    if (series.unit === "byte") {
+    if (series.unit === "bytes") {
       options = Object.assign(options, {
         yaxis: {
           labels: {
