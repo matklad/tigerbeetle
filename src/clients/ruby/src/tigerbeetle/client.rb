@@ -116,6 +116,11 @@ module TigerBeetle
     private
 
     def native_submit(operation, payload)
+      # Is this correct? We should raise, rather than silently pretend that server returnd empty
+      # result. I think we can maybe just pass in the empty array, and let the layers beneath deal
+      # with it? We might add "empty" operations at some point. Even if the result is empty,
+      # this still comunicates synchronization information --- that the cluster is there, and
+      # that all preceeding responses are ordered before all subsequent ones.
       return [] if payload.empty?
       raise ClientClosedError if closed?
 

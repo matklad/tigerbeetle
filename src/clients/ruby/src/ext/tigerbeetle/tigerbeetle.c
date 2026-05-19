@@ -4,6 +4,10 @@
 #include "ruby.h"
 #include "ruby/thread.h"
 #include "tb_client.h"
+// Should we use C assert, or rather define our own? If NDEBUG is _not_ set, then it's fine to
+// use built-in assert. If NDEBUG can be set (so, assertions could be disabled), let's rathre define
+// our own tb_assert function that always runs, and always aborts. We don't disable assertions in
+// prod. 
 #include <assert.h>
 #include <stdatomic.h>
 #include <stdbool.h>
@@ -131,6 +135,9 @@ static void rb_tb_on_completion(
 
         if (result_size > 0) {
             req->result = malloc(result_size);
+            // Great that you are using assertions here, but, for ooms, I think we'd rather report
+            // them to the user. I _think_ the ruby side has access to `result_size` and result,
+            // so, presumably, it can raise if size is positive, but the pointer is null?
             assert(req->result != NULL);
             memcpy(req->result, result, result_size);
         }

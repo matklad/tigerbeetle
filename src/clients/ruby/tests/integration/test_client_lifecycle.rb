@@ -88,4 +88,9 @@ class TestClientLifecycle < Minitest::Test
   ensure
     clients&.each(&:close)
   end
+
+  # Let's also add a stress test here, that uses multiple threads to race close and create
+  # operations. The results there would depend on order, of course, but what we want to
+  # check is that the thing doesn't crash or hang.
+  # See https://github.com/tigerbeetle/tigerbeetle/pull/3724
 end
