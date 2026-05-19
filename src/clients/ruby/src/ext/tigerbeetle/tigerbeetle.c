@@ -1,3 +1,5 @@
+// Ruby doesn't guarantee ABI stability, so we must use ruby.h present on the user's machine.
+// We don't want to run Zig compiler there though, so we have to implement this thin warpper in C.
 #include "rb_tb_gen.h"
 #include "ruby.h"
 #include "ruby/thread.h"
